@@ -4,27 +4,26 @@ import tkinter as tk
 from PIL import Image, ImageTk
 from tkinter import Tk, Button, Label, Toplevel, Frame, Entry
 from PIL import ImageFont
+from database import get_database_row
 import random
 import time
 
+
 class Game:
-    def __init__(self):
+    def __init__(self,database_dict):
         # Initialize game state
         self.window = tk.Tk()
-        bgimg = tk.PhotoImage(file = "/Users/jelly/Downloads/new_bg.png")
-        limg= Label(self.window, i=bgimg)
-        limg.pack()
         self.window.title("Game Tai Si Ja Nong Sao")
         self.window.geometry("1440x990")
         self.screen_width = self.window.winfo_screenwidth()
         self.screen_height = self.window.winfo_screenheight()
-
-        self.words_dict = {
-            "prayut": {"category": "นายกในดวงใจ", "hints": ["สุดหล่อปี 57", "รักนะเลขาตู่", "ตัวตึงองค์มนตรี"]},
-            "pravit": {"category": "คุณลุงในดวงใจ", "hints": ["นาฬิกาเพื่อน", "ลองนายก", "เรื่องปฏิวัติผมไม่เกี่ยวข้อง"]},
-            "anutin": {"category": "คุณหมอในดวงใจ", "hints": ["โควิดกระจอก", "ภูมิใจดูด", "สารหนู"]},
-            "newyear": {"category": "วันสำคัญ", "hints": ["วันปีใหม่"]}
-        }
+        self.database_dict = database_dict
+        self.words_dict = {}
+        for key, value in database_dict.items():
+            print("Key:", key)
+            print("Value:", value)
+            self.words_dict[value['Answer']] = {"category": value["Question"],"hints": value['Hint']}
+        
         self.custom_font_path = "/Users/jelly/Downloads/Joti_One/JotiOne-Regular.ttf"
         self.custom_font_title_path = "/Users/jelly/Downloads/Luckiest_Guy/LuckiestGuy-Regular.ttf"
         custom_font_size = 16 
@@ -64,19 +63,10 @@ class Game:
         
         image = Image.open("/Users/jelly/Downloads/new_bg.png")
         self.bg = ImageTk.PhotoImage(image)
-        canvas = Canvas(self.window)
-        canvas.create_image(0, 0, anchor="nw", image=self.bg)
-        canvas.pack()
+    
         
         
-        
-
-        start_title = Label(canvas, text="WHAT\nWORLD", font=(self.custom_font_title, 100), fg="#F4C908", bg="#0D68EF", bd=10, relief="solid")
-        start_label = Label(canvas, text="เกมส์ทายคำศัพท์", font=(self.custom_font_title, 50), fg="#FFFFFF", bg="#4dcbfe", )
-        start_title.pack(side=TOP,pady=100,padx=300)
-        start_label.pack(padx=24,pady=(24,0))
-        start_button = Button(canvas, text="Start Game", font=(self.custom_font_title, 50), command=self.show_name_page)
-        start_button.pack(padx=24,pady=(150,0))
+    
        
         
 
@@ -268,4 +258,18 @@ class Game:
         self.finish_game_frame.pack()
 
 if __name__ == "__main__":
-    game = Game()
+    database_row = get_database_row()  # เรียกใช้ฟังก์ชัน get_database_row เพื่อรับข้อมูลจากฐานข้อมูล
+    database_dict = {}
+    for row in database_row:
+        key = row[0]  # ใช้ index เพื่อเข้าถึง 'Id'
+        value = {
+            'Question': row[1],  # ใช้ index เพื่อเข้าถึง 'Question'
+            'Answer': row[2],    # ใช้ index เพื่อเข้าถึง 'Answer'
+            'Hint': row[3]       # ใช้ index เพื่อเข้าถึง 'Hint'
+        }
+        database_dict[key] = value
+    game = Game(database_dict)
+
+ 
+    
+    
