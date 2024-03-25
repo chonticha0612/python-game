@@ -15,7 +15,7 @@ def get_database_row():
 
         mycursor = mydb.cursor()
 
-        mycursor.execute("SELECT * FROM World")
+        mycursor.execute("SELECT * FROM Games")
         myResult = mycursor.fetchall()
 
         return myResult  # Return the result
