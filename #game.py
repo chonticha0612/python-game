@@ -26,7 +26,7 @@ class Game:
             self.words_dict[value['Ans_Num']] = {"category": value["Question"],"Ans_TH":value["Ans_TH"]}
         
         self.words = list(self.words_dict.items())
-        self.secret_word,self.Question = self.get_new_secret_word()
+        self.secret_word,self.Question,self.Ans_TH = self.get_new_secret_word()
        
         # Create frames for different pages
         self.start_frame = Frame(self.window)   
@@ -53,7 +53,7 @@ class Game:
         self.canvas_start_frame = Canvas(self.start_frame, width=1440, height=1024)
         self.canvas_start_frame.pack()
         ##BG 
-        image_bg = Image.open("/Users/jelly/Downloads/bg1.jpg")
+        image_bg = Image.open("/Users/jelly/Downloads/bg1.png")
         width = 1445
         height = 900
         image_bg = image_bg.resize((width, height))
@@ -86,7 +86,7 @@ class Game:
         self.canvas_name_frame = Canvas(self.name_frame, width=1440, height=1024)
         self.canvas_name_frame.pack()
         ##BG 
-        image_bg2 = Image.open("/Users/jelly/Downloads/bg1.jpg")
+        image_bg2 = Image.open("/Users/jelly/Downloads/bg1.png")
         width = 1445
         height = 900
         image_bg2 = image_bg.resize((width, height))
@@ -95,7 +95,7 @@ class Game:
         self.canvas_name_frame.create_image(0,0,image=self.tk_image_bg2,anchor=NW)
         
         # Create the Entry widget directly on self.canvas_bg
-        name = Image.open("/Users/jelly/Downloads/save_button.png")
+        name = Image.open("/Users/jelly/Downloads/name.png")
         # Resize the image to desired width and height
         width = 800
         height = 400
@@ -108,7 +108,7 @@ class Game:
     
         
     
-        save_button = Image.open("/Users/jelly/Downloads/save.png")
+        save_button = Image.open("/Users/jelly/Downloads/save_button.png")
         width = 400
         height = 100
         save_button = save_button.resize((width, height))
@@ -127,7 +127,7 @@ class Game:
         self.canvas_how_to_play_frame = Canvas(self.how_to_play_game_frame, width=1440, height=1024)
         self.canvas_how_to_play_frame.pack()
         ##BG 
-        image_bg3 = Image.open("/Users/jelly/Downloads/bg1.jpg")
+        image_bg3 = Image.open("/Users/jelly/Downloads/bg1.png")
         width = 1445
         height = 900
         image_bg3 = image_bg.resize((width, height))
@@ -137,11 +137,11 @@ class Game:
         
         how_to_play = Image.open("/Users/jelly/Downloads/how_to_play2.png")
         # Resize the image to desired width and height
-        width = 200
-        height = 200
+        width = 100
+        height = 100
         image1 = image1.resize((width, height))
         self.tk_how_to_play = ImageTk.PhotoImage(how_to_play)
-        self.canvas_how_to_play_frame.create_image(110, 100, image=self.tk_how_to_play, anchor=NW)
+        self.canvas_how_to_play_frame.create_image(140, 50, image=self.tk_how_to_play, anchor=NW)
 
         save_button1= Image.open("/Users/jelly/Downloads/start.png")
         width = 400
@@ -155,7 +155,7 @@ class Game:
         self.canvas_game_frame = Canvas(self.game_frame, width=1440, height=1024)
         self.canvas_game_frame.pack()
         ##BG 
-        image_bg4 = Image.open("/Users/jelly/Downloads/bg1.jpg")
+        image_bg4 = Image.open("/Users/jelly/Downloads/bg1.png")
         width = 1445
         height = 900
         image_bg4 = image_bg.resize((width, height))
@@ -193,7 +193,6 @@ class Game:
         text_font = ("Arial", 30)
         text_color = "black"
         self.text_lives = self.canvas_game_frame.create_text(text_x, text_y, text=text_content, font=text_font, fill=text_color, anchor=CENTER)
-        
         text_x = 620
         text_y = 45
         text_content = self.score
@@ -244,12 +243,12 @@ class Game:
             text_color = "black"
             self.text_object = self.canvas_game_frame.create_text(text_x, text_y, text=text_content, font=text_font, fill=text_color, anchor=CENTER)
 
-          # Create a canvas for the win frame
+          # Create a canvas for the finish frame
     
         self.canvas_finish_game_frame = Canvas(self.finish_game_frame, width=1440, height=1024)
         self.canvas_finish_game_frame.pack()
         
-        image_bg5 = Image.open("/Users/jelly/Downloads/bg1.jpg")
+        image_bg5 = Image.open("/Users/jelly/Downloads/bg1.png")
         width = 1445
         height = 900
         image_bg5 = image_bg5.resize((width, height))
@@ -284,18 +283,16 @@ class Game:
         text_x = 785
         text_y = 45
         text_content = self.lives
-        print("🏔️ live %s"%self.lives)
         text_font = ("Arial", 30)
         text_color = "black"
-        self.text_lives = self.canvas_finish_game_frame.create_text(text_x, text_y, text=text_content, font=text_font, fill=text_color, anchor=CENTER)
+        self.text_lives_finish = self.canvas_finish_game_frame.create_text(text_x, text_y, text=text_content, font=text_font, fill=text_color, anchor=CENTER)
             
         text_x = 620
         text_y = 45
         text_content = self.score
-        print("🏔️ score %s"%self.score)
         text_font = ("Arial", 30)
         text_color = "black"
-        self.text_score1 = self.canvas_finish_game_frame.create_text(text_x, text_y, text=text_content, font=text_font, fill=text_color, anchor=CENTER)
+        self.text_score_finish = self.canvas_finish_game_frame.create_text(text_x, text_y, text=text_content, font=text_font, fill=text_color, anchor=CENTER)
 
         congrats = Image.open("/Users/jelly/Downloads/congrats.png")
             # Resize the image to desired width and height
@@ -317,7 +314,7 @@ class Game:
          # Create a canvas for the lose frame
         self.canvas_lose_game_frame = Canvas(self.lose_game_frame, width=1440, height=1024)
         self.canvas_lose_game_frame.pack()
-        image_bg6 = Image.open("/Users/jelly/Downloads/bg1.jpg")
+        image_bg6 = Image.open("/Users/jelly/Downloads/bg1.png")
         width = 1445
         height = 900
         image_bg6 = image_bg6.resize((width, height))
@@ -353,14 +350,14 @@ class Game:
         text_content = self.lives
         text_font = ("Arial", 30)
         text_color = "black"
-        self.text_lives = self.canvas_lose_game_frame.create_text(text_x, text_y, text=text_content, font=text_font, fill=text_color, anchor=CENTER)
+        self.text_lives_lose = self.canvas_lose_game_frame.create_text(text_x, text_y, text=text_content, font=text_font, fill=text_color, anchor=CENTER)
             
         text_x = 620
         text_y = 45
         text_content = self.score
         text_font = ("Arial", 30)
         text_color = "black"
-        self.text_score1 = self.canvas_lose_game_frame.create_text(text_x, text_y, text=text_content, font=text_font, fill=text_color, anchor=CENTER)
+        self.text_score_lose = self.canvas_lose_game_frame.create_text(text_x, text_y, text=text_content, font=text_font, fill=text_color, anchor=CENTER)
 
         lose = Image.open("/Users/jelly/Downloads/lose.png")
             # Resize the image to desired width and height
@@ -377,7 +374,7 @@ class Game:
         new_game = new_game.resize((width, height))
         self.tk_new_game = ImageTk.PhotoImage(new_game)
         self.new_game_id= self.canvas_lose_game_frame.create_image(500, 700, image=self.tk_new_game, anchor=CENTER)
-        self.canvas_lose_game_frame.tag_bind(self.new_game_id, "<Button-1>", self.show_game_page)
+        self.canvas_lose_game_frame.tag_bind(self.new_game_id, "<Button-1>", self.show_how_to_play_game_page)
             
         home_button1= Image.open("/Users/jelly/Downloads/home.png")
         width = 400
@@ -388,16 +385,59 @@ class Game:
         self.canvas_lose_game_frame.tag_bind(self.home_button1_id, "<Button-1>", self.show_start_page)
 
         self.run()
+        
+    def reset_game(self):
+        self.score = 0
+        self.lives = 5  # You can set it to your initial lives value
+        self.game_finished = False
+        self.words_dict = {}  # Reset the words dictionary or reinitialize it with new words
+        for key, value in self.database_dict.items():
+            self.words_dict[value['Ans_Num']] = {"category": value["Question"], "Ans_TH": value["Ans_TH"]}
+        self.secret_word, self.Question, self.Ans_TH = self.get_new_secret_word()
 
 
     def get_new_secret_word(self):
         secret_word = random.choice(list(self.words_dict.keys()))
         category = self.words_dict[secret_word]["category"]
-        print(self.words_dict[secret_word]["Ans_TH"])
-        return secret_word, category
+        Ans_TH = self.words_dict[secret_word]["Ans_TH"]
+        del self.words_dict[secret_word]
+     
+      
+        return secret_word, category,Ans_TH
+    
+    def update_score_lose(self):
+        text_x = 785
+        text_y = 45
+        text_content = self.lives
+        text_font = ("Arial", 30)
+        text_color = "black"
+        self.canvas_lose_game_frame.itemconfig(self.text_lives_lose, text=text_content)
+         
+        # self.canvas_game_frame.itemconfig(text_object, text=text_content)
+        text_x = 620
+        text_y = 45
+        text_content = self.score
+        text_font = ("Arial", 30)
+        text_color = "black"
+        self.canvas_lose_game_frame.itemconfig(self.text_score_lose, text=text_content)
+    
+    def update_score_finish(self):
+        text_x = 785
+        text_y = 45
+        text_content = self.lives
+        text_font = ("Arial", 30)
+        text_color = "black"
+        self.canvas_finish_game_frame.itemconfig(self.text_lives_finish, text=text_content)
+         
+        # self.canvas_game_frame.itemconfig(text_object, text=text_content)
+        text_x = 620
+        text_y = 45
+        text_content = self.score
+        text_font = ("Arial", 30)
+        text_color = "black"
+        self.canvas_finish_game_frame.itemconfig(self.text_score_finish, text=text_content)
     
     def update_score_display(self):
-        print("🏔️🏔️ %s %s"%(self.lives,self.score))
         text_x = 785
         text_y = 45
         text_content = self.lives
@@ -413,22 +453,12 @@ class Game:
         text_color = "black"
         self.canvas_game_frame.itemconfig(self.text_score1, text=text_content)
         
-        
     def update_question(self):
-        self.len_secret_word = len(self.words_dict[self.secret_word]["category"])
-        print(self.len_secret_word)
-        if self.len_secret_word > 40:
-            print("มากกว่า 40")
            
-            text_content = self.words_dict[self.secret_word]["category"]
+        text_content = self.category
             
-            self.canvas_game_frame.itemconfig(self.text_object, text=text_content)
-            
-        else :
-           
-            text_content = self.words_dict[self.secret_word]["category"]
-          
-            self.canvas_game_frame.itemconfig(self.text_object, text=text_content)
+        self.canvas_game_frame.itemconfig(self.text_object, text=text_content)
+        
         
         
     def reset_score_and_lives(self):
@@ -438,43 +468,49 @@ class Game:
     def update_screen(self,event=None):
         guess = self.text_input.get()
         self.secret_word = str(self.secret_word)
-        if guess == self.secret_word or guess==self.words_dict[self.secret_word]["Ans_TH"]:
-            if len(self.words) >= 1:
+        if guess == self.secret_word or guess== self.Ans_TH:
+            if len(self.words_dict) >= 1:
                 self.score += 1
                 self.update_score_display()
                 self.game_frame.update()
                 self.text_input.delete(0, "end")
                 time.sleep(0.3)
-
-            if len(self.words) < 1:
+                self.secret_word, self.category,self.Ans_TH = self.get_new_secret_word()
+                self.update_question()
+                
+            else:
                 self.game_finished = True
                 self.text_input.delete(0, "end")
+                self.update_score_finish()
                 self.show_finish_game_page()
-            else:
-                self.secret_word, self.clue = self.get_new_secret_word()
-                self.update_question()
-                self.category_str.set(self.words_dict[self.secret_word]["category"])
+                self.main()
+                
+                
+                # self.12.set(self.words_dict[self.secret_word]["category"])
                 
         else:
             self.lives -= 1
             self.update_score_display()
-            # self.game_frame.update()
-            # self.clue_label.pack_forget()
             if self.lives < 1:
                 self.game_finished = True
-                self.show_lose_game_page(self.lives)
+                self.update_score_lose()
+                self.show_lose_game_page()
                 
-
         self.text_input.delete(0, "end")
 
-    def main(self):
-        if not self.game_finished:
-            self.window.after(10, self.main)
-        else:
-            print("Quitting...")
-
+   
+    def check_game_status(self):
+        if self.game_finished:
+            # Reset the game or exit the application
+            self.reset_game()  # You 
+    
     def run(self):
-        self.window.mainloop()
+         while True:
+            self.check_game_status()
+            self.update_score_display()
+            self.window.update_idletasks()
+            self.window.update()
+        # self.window.mainloop()
 
     def show_start_page(self,event=None):
         self.game_frame.pack_forget()
@@ -486,7 +522,6 @@ class Game:
 
     def show_game_page(self,event=None):
         # self.reset_score_and_lives()
-        print("🏔️ %s,%s"%(self.lives,self.score))
         self.start_frame.pack_forget()
         self.name_frame.pack_forget()
         self.how_to_play_game_frame.pack_forget()
@@ -540,6 +575,10 @@ if __name__ == "__main__":
         }
         database_dict[key] = value
     game = Game(database_dict)
+    # game.run()
+    # game.reset_game()
+    
+
 
  
     
