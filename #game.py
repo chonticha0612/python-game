@@ -32,7 +32,6 @@ class Game:
         self.start_frame = Frame(self.window)   
         self.start_frame.pack()
         
-
         self.game_frame = Frame(self.window)
         self.game_frame.pack_forget()
         
@@ -206,8 +205,8 @@ class Game:
         frame = frame.resize((width, height))
         self.tk_frame = ImageTk.PhotoImage(frame)
         self.canvas_game_frame.create_image(110, 100, image=self.tk_frame, anchor=NW)
-        self.category_str = StringVar()
-        self.category_str.set(self.Question)
+        self.Question_str = StringVar()
+        self.Question_str.set(self.Question)
         
         self.text_input = Entry(self.canvas_game_frame, width=15, font=("Arial", 50), justify="center", highlightbackground="#ff944d")
         self.canvas_game_frame.create_window(700, 350, anchor=CENTER, window=self.text_input)
@@ -228,20 +227,12 @@ class Game:
 
         self.text_input.bind("<KeyRelease>", validate_entry2)
         self.len_Question = len(self.Question)
-        if self.len_Question > 40:
-            text_x = 700
-            text_y = 200
-            text_content = self.Question
-            text_font = ("Arial", 20)
-            text_color = "black"
-            self.text_object = self.canvas_game_frame.create_text(text_x, text_y, text=text_content, font=text_font, fill=text_color, anchor=CENTER)
-        else :
-            text_x = 700
-            text_y = 200
-            text_content = self.Question
-            text_font = ("Arial",50 )
-            text_color = "black"
-            self.text_object = self.canvas_game_frame.create_text(text_x, text_y, text=text_content, font=text_font, fill=text_color, anchor=CENTER)
+        text_x = 700
+        text_y = 200
+        text_content = self.Question
+        text_font = ("Arial", 20)
+        text_color = "black"
+        self.text_object = self.canvas_game_frame.create_text(text_x, text_y, text=text_content, font=text_font, fill=text_color, anchor=CENTER)
 
           # Create a canvas for the finish frame
     
@@ -394,16 +385,19 @@ class Game:
         for key, value in self.database_dict.items():
             self.words_dict[value['Ans_Num']] = {"category": value["Question"], "Ans_TH": value["Ans_TH"]}
         self.secret_word, self.Question, self.Ans_TH = self.get_new_secret_word()
+        self.update_question()
+        print(self.secret_word)
+        print(self.Question)
 
 
     def get_new_secret_word(self):
         secret_word = random.choice(list(self.words_dict.keys()))
-        category = self.words_dict[secret_word]["category"]
+        Question = self.words_dict[secret_word]["category"]
         Ans_TH = self.words_dict[secret_word]["Ans_TH"]
         del self.words_dict[secret_word]
      
       
-        return secret_word, category,Ans_TH
+        return secret_word, Question,Ans_TH
     
     def update_score_lose(self):
         text_x = 785
@@ -455,7 +449,7 @@ class Game:
         
     def update_question(self):
            
-        text_content = self.category
+        text_content = self.Question
             
         self.canvas_game_frame.itemconfig(self.text_object, text=text_content)
         
@@ -475,7 +469,7 @@ class Game:
                 self.game_frame.update()
                 self.text_input.delete(0, "end")
                 time.sleep(0.3)
-                self.secret_word, self.category,self.Ans_TH = self.get_new_secret_word()
+                self.secret_word, self.Question,self.Ans_TH = self.get_new_secret_word()
                 self.update_question()
                 
             else:
